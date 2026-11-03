@@ -13,27 +13,27 @@ interface ExerciseRowProps {
 
 export const ExerciseRow = React.memo(({ exercise, index, style, onStart, onToggleSave, isSaved }: ExerciseRowProps) => {
   return (
-    <div style={style} className="flex items-center justify-between px-4 border-b border-gray-200 hover:bg-gray-50 text-sm">
-      <div className="flex items-center space-x-4">
-        <span className="w-10 text-gray-400">{index + 1}</span>
-        <div>
-          <span className="font-medium text-gray-800">{exercise.name}</span>
-          <span className="ml-2 text-xs text-gray-500">({exercise.group})</span>
+    <div style={{ ...style, display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 12px', borderBottom: '1px solid #eee', fontSize: '13px', background: '#fff', boxSizing: 'border-box' }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '12px', overflow: 'hidden', flex: 1 }}>
+        <span style={{ width: '24px', color: '#888', flexShrink: 0 }}>{index + 1}</span>
+        <div style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+          <span style={{ fontWeight: 500, color: '#333' }}>{exercise.name}</span>
+          <span style={{ marginLeft: '6px', fontSize: '11px', color: '#666' }}>({exercise.group})</span>
         </div>
       </div>
-      <div className="flex items-center space-x-6">
-        <span className="text-gray-600">HLV: {exercise.trainer}</span>
-        <span className="text-gray-600 w-16 text-right">{formatDuration(exercise.duration)}</span>
-        <div className="space-x-2">
+      <div style={{ display: 'flex', alignItems: 'center', gap: '12px', flexShrink: 0, marginLeft: '12px' }}>
+        <span style={{ color: '#555', fontSize: '12px' }}>HLV: {exercise.trainer}</span>
+        <span style={{ color: '#555', width: '40px', textAlign: 'right', fontSize: '12px' }}>{formatDuration(exercise.duration)}</span>
+        <div style={{ display: 'flex', gap: '6px' }}>
           <button 
             onClick={() => onStart(exercise)}
-            className="px-3 py-1 bg-blue-600 text-white rounded hover:bg-blue-700 text-xs"
+            style={{ padding: '3px 8px', background: '#2563eb', color: '#fff', border: 'none', borderRadius: '4px', cursor: 'pointer', fontSize: '11px' }}
           >
             Bắt đầu
           </button>
           <button 
             onClick={() => onToggleSave(exercise.id)}
-            className="px-2 py-1 border rounded text-xs"
+            style={{ padding: '3px 6px', border: '1px solid #ccc', background: '#fff', borderRadius: '4px', cursor: 'pointer', fontSize: '11px' }}
           >
             {isSaved ? '❤️' : '🤍'}
           </button>

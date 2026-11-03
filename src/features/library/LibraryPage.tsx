@@ -14,7 +14,7 @@ export default function LibraryPage() {
 
   const debouncedSearch = useDebounce<string>(searchTerm, 300);
 
-  // Lọc và sắp xếp với useMemo, tường minh kiểu cho ex
+  // Lọc và sắp xếp với useMemo
   const filteredExercises = useMemo<Exercise[]>(() => {
     let result = EXERCISES.filter((ex: Exercise) => {
       const matchSearch = ex.name.toLowerCase().includes(debouncedSearch.toLowerCase()) ||
@@ -46,28 +46,29 @@ export default function LibraryPage() {
   }, [toggleSave]);
 
   return (
-    <div className="p-6 max-w-6xl mx-auto">
-      <h1 className="text-2xl font-bold mb-4">Kho 10.000 Bài Tập Gym</h1>
+    <div style={{ padding: '24px', maxWidth: '1100px', margin: '0 auto' }}>
+      <h1 style={{ fontSize: '24px', fontWeight: 'bold', marginBottom: '16px', color: '#1f2937' }}>
+        Kho 10.000 Bài Tập Gym
+      </h1>
       
       {/* Bộ lọc và Tìm kiếm */}
-      <div className="flex flex-wrap gap-4 mb-4 items-center">
+      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '16px', marginBottom: '16px', alignItems: 'flex-end' }}>
         <div>
-          <label className="block text-xs text-gray-500 mb-1">Tìm kiếm</label>
+          <label style={{ display: 'block', fontSize: '12px', color: '#6b7280', marginBottom: '4px' }}>Tìm kiếm</label>
           <input 
             type="text" 
             value={searchTerm}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchTerm(e.target.value)}
             placeholder="Tên bài hoặc HLV..."
-            className="border px-3 py-2 rounded text-sm w-64"
+            style={{ width: '240px' }}
           />
         </div>
 
         <div>
-          <label className="block text-xs text-gray-500 mb-1">Nhóm cơ</label>
+          <label style={{ display: 'block', fontSize: '12px', color: '#6b7280', marginBottom: '4px' }}>Nhóm cơ</label>
           <select 
             value={selectedGroup}
             onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setSelectedGroup(e.target.value)}
-            className="border px-3 py-2 rounded text-sm"
           >
             <option value="Tất cả">Tất cả</option>
             {GROUPS.map((g: string) => <option key={g} value={g}>{g}</option>)}
@@ -75,11 +76,10 @@ export default function LibraryPage() {
         </div>
 
         <div>
-          <label className="block text-xs text-gray-500 mb-1">Sắp xếp</label>
+          <label style={{ display: 'block', fontSize: '12px', color: '#6b7280', marginBottom: '4px' }}>Sắp xếp</label>
           <select 
             value={sortBy}
             onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setSortBy(e.target.value)}
-            className="border px-3 py-2 rounded text-sm"
           >
             <option value="default">Mặc định</option>
             <option value="name-asc">Tên A-Z</option>
@@ -88,12 +88,12 @@ export default function LibraryPage() {
         </div>
       </div>
 
-      <div className="mb-2 text-sm text-gray-600">
+      <div style={{ marginBottom: '8px', fontSize: '14px', color: '#4b5563' }}>
         {filteredExercises.length > 0 ? `Tìm thấy ${filteredExercises.length} bài tập` : 'Không tìm thấy bài tập nào'}
       </div>
 
       {/* Danh sách ảo hóa bằng react-window */}
-      <div className="border rounded bg-white overflow-hidden">
+      <div style={{ border: '1px solid #e5e7eb', borderRadius: '6px', background: '#fff', overflow: 'hidden' }}>
         {filteredExercises.length > 0 ? (
           <List
             height={560}
@@ -114,7 +114,9 @@ export default function LibraryPage() {
             )}
           </List>
         ) : (
-          <div className="h-40 flex items-center justify-center text-gray-400">Không tìm thấy bài tập nào</div>
+          <div style={{ height: '160px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#9ca3af' }}>
+            Không tìm thấy bài tập nào
+          </div>
         )}
       </div>
     </div>

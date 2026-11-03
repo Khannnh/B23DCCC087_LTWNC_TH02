@@ -1,122 +1,63 @@
-import { useState } from 'react'
-import heroImg from './assets/hero.png'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import './App.css'
+import { BrowserRouter as Router, Routes, Route, NavLink } from 'react-router-dom';
+import LibraryPage from './features/library/LibraryPage';
 
-function App() {
-  const [count, setCount] = useState(0)
+// Tạm thời comment lại các trang chưa viết xong để tránh lỗi import
+// import SavedPage from './features/saved/SavedPage';
+// import RoutinesPage from './features/routines/RoutinesPage';
+// import RoutinesDetailPage from './features/routines/RoutinesDetailPage';
 
+export default function App() {
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.tsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
+    <Router>
+      <div style={{ minHeight: '100vh', backgroundColor: '#f9fafb', paddingBottom: '80px' }}>
+        {/* Thanh menu điều hướng đầu trang */}
+        <nav style={{ display: 'flex', gap: '24px', padding: '16px 24px', backgroundColor: '#ffffff', borderBottom: '1px solid #e5e7eb', marginBottom: '16px' }}>
+          <NavLink 
+            to="/" 
+            style={({ isActive }) => ({ 
+              textDecoration: 'none', 
+              color: isActive ? '#2563eb' : '#4b5563', 
+              fontWeight: isActive ? 'bold' : 'normal',
+              borderBottom: isActive ? '2px solid #2563eb' : 'none',
+              paddingBottom: '4px'
+            })}
+          >
+            Kho bài tập
+          </NavLink>
+          <NavLink 
+            to="/saved" 
+            style={({ isActive }) => ({ 
+              textDecoration: 'none', 
+              color: isActive ? '#2563eb' : '#4b5563', 
+              fontWeight: isActive ? 'bold' : 'normal',
+              borderBottom: isActive ? '2px solid #2563eb' : 'none',
+              paddingBottom: '4px'
+            })}
+          >
+            Bài tập đã lưu
+          </NavLink>
+          <NavLink 
+            to="/routines" 
+            style={({ isActive }) => ({ 
+              textDecoration: 'none', 
+              color: isActive ? '#2563eb' : '#4b5563', 
+              fontWeight: isActive ? 'bold' : 'normal',
+              borderBottom: isActive ? '2px solid #2563eb' : 'none',
+              paddingBottom: '4px'
+            })}
+          >
+            Danh sách giáo án
+          </NavLink>
+        </nav>
 
-      <div className="ticks"></div>
-
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
-
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
-  )
+        {/* Khung chứa các Route */}
+        <Routes>
+          <Route path="/" element={<LibraryPage />} />
+          {/* <Route path="/saved" element={<SavedPage />} />
+          <Route path="/routines" element={<RoutinesPage />} />
+          <Route path="/routines/:id" element={<RoutinesDetailPage />} /> */}
+        </Routes>
+      </div>
+    </Router>
+  );
 }
-
-export default App

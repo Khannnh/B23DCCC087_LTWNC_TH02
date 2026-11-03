@@ -21,9 +21,15 @@ export const useSessionStore = create<SessionState>()((set, get) => ({
   elapsed: 0,
 
   startSession: (exercises, startIndex) => {
+    if (exercises.length === 0) return;
+
+    const currentIndex = Number.isFinite(startIndex)
+      ? Math.min(Math.max(Math.floor(startIndex), 0), exercises.length - 1)
+      : 0;
+
     set({
       queue: exercises,
-      currentIndex: startIndex >= 0 && startIndex < exercises.length ? startIndex : 0,
+      currentIndex,
       isRunning: true, // Tự động chạy đồng hồ ngay khi bấm bắt đầu
       elapsed: 0,
     });

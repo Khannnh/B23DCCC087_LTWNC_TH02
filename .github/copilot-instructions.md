@@ -1,0 +1,1 @@
+RÀNG BUỘC CHUNG: Không sửa logic Phần 1 (lọc, sắp xếp, useDebounce, FixedSizeList, hàm handleKeywordShift). Dòng 1 của src/App.tsx phải luôn là: const BUILD_TAG = "wk-5182"; Không dùng Redux Toolkit, any, enum. Import kiểu dùng `import type`. Không để biến/import thừa. Trang dùng React.lazy phải export default. Giữ ExerciseRow bọc React.memo, hàm truyền xuống bọc useCallback.

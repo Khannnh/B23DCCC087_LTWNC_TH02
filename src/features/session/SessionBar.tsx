@@ -2,6 +2,8 @@ import { useEffect } from 'react';
 import { useSessionStore } from './useSessionStore';
 import { CountdownBar } from './CountdownBar';
 
+export const SESSION_BAR_HEIGHT = 80;
+
 export default function SessionBar() {
   const queue = useSessionStore((s) => s.queue);
   const currentIndex = useSessionStore((s) => s.currentIndex);
@@ -13,14 +15,11 @@ export default function SessionBar() {
 
   // Đồng hồ đếm giây bằng setInterval
   useEffect(() => {
-    let interval: ReturnType<typeof setInterval> | null = null;
-    if (isRunning) {
-      interval = setInterval(() => {
-        tick();
-      }, 1000);
-    }
+    if (!isRunning) return;
+
+    const interval = setInterval(tick, 1000);
     return () => {
-      if (interval) clearInterval(interval);
+      clearInterval(interval);
     };
   }, [isRunning, tick]);
   const currentExercise = currentIndex >= 0 ? queue[currentIndex] : null;
@@ -31,6 +30,8 @@ export default function SessionBar() {
       bottom: 0,
       left: 0,
       right: 0,
+      height: SESSION_BAR_HEIGHT,
+      boxSizing: 'border-box',
       backgroundColor: '#ffffff',
       borderTop: '1px solid #e5e7eb',
       padding: '12px 24px',

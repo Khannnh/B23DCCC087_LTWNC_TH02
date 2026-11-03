@@ -8,19 +8,22 @@ interface ExerciseRowProps {
   style: React.CSSProperties;
   onStart: (exercise: Exercise) => void;
   onAddToSession: (exercise: Exercise) => void;
+  onAddToRoutine: (exerciseId: string) => void;
+  addToRoutineDisabled: boolean;
+  addToRoutineTitle?: string;
   onToggleSave: (id: string) => void;
   isSaved: boolean;
 }
 
-export const ExerciseRow = React.memo(({ exercise, index, style, onStart, onAddToSession, onToggleSave, isSaved }: ExerciseRowProps) => {
+export const ExerciseRow = React.memo(({ exercise, index, style, onStart, onAddToSession, onAddToRoutine, addToRoutineDisabled, addToRoutineTitle, onToggleSave, isSaved }: ExerciseRowProps) => {
   return (
-    <div style={{ ...style, display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 16px', borderBottom: '1px solid #e5e7eb', fontSize: '14px', background: '#fff', boxSizing: 'border-box' }}>
+    <div className="exercise-row" style={{ ...style, display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 16px', borderBottom: '1px solid #e5e7eb', fontSize: '14px', background: '#fff', boxSizing: 'border-box' }}>
       {/* Cột trái: Số thứ tự, tên bài, nhóm cơ */}
       <div style={{ display: 'flex', alignItems: 'center', gap: '16px', overflow: 'hidden', flex: 1 }}>
         <span style={{ width: '30px', color: '#6b7280', fontWeight: 500, flexShrink: 0 }}>{index + 1}</span>
         <div style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-          <span style={{ fontWeight: 600, color: '#1f2937' }}>{exercise.name}</span>
-          <span style={{ marginLeft: '8px', fontSize: '13px', color: '#4b5563' }}>({exercise.group})</span>
+          <span style={{ fontWeight: 600, color: 'var(--text-h)' }}>{exercise.name}</span>
+          <span className="exercise-metadata" style={{ marginLeft: '8px', fontSize: '13px', color: '#4b5563' }}>({exercise.group})</span>
         </div>
       </div>
 
@@ -41,6 +44,14 @@ export const ExerciseRow = React.memo(({ exercise, index, style, onStart, onAddT
             title="Thêm vào buổi tập"
           >
             + Buổi tập
+          </button>
+          <button
+            onClick={() => onAddToRoutine(exercise.id)}
+            disabled={addToRoutineDisabled}
+            title={addToRoutineTitle}
+            style={{ padding: '6px 10px', background: '#7c3aed', color: '#fff', border: 'none', borderRadius: '4px', cursor: addToRoutineDisabled ? 'not-allowed' : 'pointer', opacity: addToRoutineDisabled ? 0.5 : 1, fontSize: '13px', fontWeight: 500 }}
+          >
+            + Giáo án
           </button>
           <button 
             onClick={() => onToggleSave(exercise.id)}

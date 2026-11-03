@@ -18,8 +18,8 @@ export function CountdownBar() {
         <span>Còn lại: {formatDuration(remaining)}</span>
         <span>{Math.round(percent)}%</span>
       </div>
-      <div style={{ width: '100%', height: '6px', backgroundColor: '#e5e7eb', borderRadius: '3px', overflow: 'hidden' }}>
-        <div style={{ width: `${percent}%`, height: '100%', backgroundColor: '#2563eb', transition: 'width 0.3s linear' }} />
+      <div className="session-progress-track" style={{ width: '100%', height: '6px', backgroundColor: '#e5e7eb', borderRadius: '3px', overflow: 'hidden' }}>
+        <div className="session-progress-value" style={{ width: `${percent}%`, height: '100%', backgroundColor: '#2563eb', transition: 'width 0.3s linear' }} />
       </div>
     </div>
   );

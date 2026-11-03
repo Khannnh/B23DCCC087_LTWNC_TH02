@@ -23,8 +23,8 @@ export default function SavedPage() {
   );
 
   return (
-    <main style={{ padding: '24px', maxWidth: '1100px', margin: '0 auto' }}>
-      <h1 style={{ fontSize: '24px', fontWeight: 'bold', marginBottom: '16px', color: '#1f2937' }}>
+    <main className="saved-page" style={{ padding: '24px', maxWidth: '1100px', margin: '0 auto' }}>
+      <h1 style={{ fontSize: '24px', fontWeight: 'bold', marginBottom: '16px', color: 'var(--text-h)' }}>
         Bài tập đã lưu
       </h1>
       <button
@@ -46,11 +46,11 @@ export default function SavedPage() {
       {savedExercises.length === 0 ? (
         <p>Bạn chưa lưu bài tập nào.</p>
       ) : (
-        <ul style={{ padding: 0, margin: 0, listStyle: 'none', border: '1px solid #e5e7eb', borderRadius: '6px', background: '#fff' }}>
+        <ul style={{ padding: 0, margin: 0, listStyle: 'none', border: '1px solid #e5e7eb', borderRadius: '6px', background: 'var(--surface-bg)' }}>
           {savedExercises.map((exercise) => (
             <li
               key={exercise.id}
-              style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '16px', padding: '12px 16px', borderBottom: '1px solid #e5e7eb' }}
+              style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '16px', padding: '12px 16px', borderBottom: '1px solid var(--surface-border)' }}
             >
               <div>
                 <strong>{exercise.name}</strong>

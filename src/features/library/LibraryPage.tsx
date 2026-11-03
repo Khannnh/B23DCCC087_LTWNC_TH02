@@ -6,11 +6,18 @@ import { ExerciseRow } from './ExerciseRow';
 import type { Exercise } from '../../types';
 import { useSessionStore } from '../session/useSessionStore';
 import { useSavedStore } from '../saved/useSavedStore';
+import { useRoutineDispatch, useRoutines } from '../routines/RoutineHooks';
 
 export default function LibraryPage() {
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [selectedGroup, setSelectedGroup] = useState<string>('Tất cả');
   const [sortBy, setSortBy] = useState<string>('default');
+  const [selectedRoutineId, setSelectedRoutineId] = useState('');
+  const routines = useRoutines();
+  const routineDispatch = useRoutineDispatch();
+  const activeRoutineId = routines.some((routine) => routine.id === selectedRoutineId)
+    ? selectedRoutineId
+    : routines[0]?.id ?? '';
 
   const debouncedSearch = useDebounce<string>(searchTerm, 300);
 
@@ -51,8 +58,13 @@ export default function LibraryPage() {
     toggleSave(id);
   }, [toggleSave]);
 
+  const handleAddToRoutine = useCallback((exerciseId: string) => {
+    if (!activeRoutineId) return;
+    routineDispatch({ type: 'addExercise', routineId: activeRoutineId, exerciseId });
+  }, [activeRoutineId, routineDispatch]);
+
   return (
-    <div style={{ padding: '24px', maxWidth: '1100px', margin: '0 auto' }}>
+    <div className="library-page" style={{ padding: '24px', maxWidth: '1100px', margin: '0 auto' }}>
       <h1 style={{ fontSize: '24px', fontWeight: 'bold', marginBottom: '16px', color: '#1f2937' }}>
         Kho 10.000 Bài Tập Gym
       </h1>
@@ -92,6 +104,24 @@ export default function LibraryPage() {
             <option value="duration-asc">Thời lượng tăng dần</option>
           </select>
         </div>
+
+        <div>
+          <label htmlFor="selected-routine" style={{ display: 'block', fontSize: '12px', color: '#6b7280', marginBottom: '4px' }}>
+            Giáo án đang chọn
+          </label>
+          <select
+            id="selected-routine"
+            value={activeRoutineId}
+            onChange={(event: React.ChangeEvent<HTMLSelectElement>) => setSelectedRoutineId(event.target.value)}
+          >
+            {routines.length === 0 && (
+              <option value="" disabled>Chưa có giáo án</option>
+            )}
+            {routines.map((routine) => (
+              <option key={routine.id} value={routine.id}>{routine.name}</option>
+            ))}
+          </select>
+        </div>
       </div>
 
       <div style={{ marginBottom: '8px', fontSize: '14px', color: '#4b5563' }}>
@@ -115,6 +145,9 @@ export default function LibraryPage() {
                 style={style}
                 onStart={handleStart}
                 onAddToSession={handleAddToSession}
+                onAddToRoutine={handleAddToRoutine}
+                addToRoutineDisabled={routines.length === 0}
+                addToRoutineTitle={routines.length === 0 ? 'Hãy tạo giáo án trước' : undefined}
                 onToggleSave={handleToggleSave}
                 isSaved={savedIds.includes(filteredExercises[index].id)}
               />

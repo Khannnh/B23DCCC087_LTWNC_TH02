@@ -25,15 +25,15 @@ export default function SessionBar() {
   const currentExercise = currentIndex >= 0 ? queue[currentIndex] : null;
 
   return (
-    <div style={{
+    <div className="session-bar" style={{
       position: 'fixed',
       bottom: 0,
       left: 0,
       right: 0,
       height: SESSION_BAR_HEIGHT,
       boxSizing: 'border-box',
-      backgroundColor: '#ffffff',
-      borderTop: '1px solid #e5e7eb',
+      backgroundColor: 'var(--surface-bg)',
+      borderTop: '1px solid var(--surface-border)',
       padding: '12px 24px',
       display: 'flex',
       alignItems: 'center',
@@ -46,7 +46,7 @@ export default function SessionBar() {
       <div style={{ display: 'flex', alignItems: 'center', gap: '16px', minWidth: '250px' }}>
         {currentExercise ? (
           <div>
-            <div style={{ fontWeight: 'bold', color: '#1f2937' }}>
+            <div className="session-title" style={{ fontWeight: 'bold', color: '#1f2937' }}>
               Đang tập: {currentExercise.name} – HLV {currentExercise.trainer}
             </div>
             <div style={{ fontSize: '12px', color: '#6b7280' }}>

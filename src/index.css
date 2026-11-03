@@ -1,8 +1,16 @@
 :root {
+  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
+  --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
+  --mono: ui-monospace, Consolas, monospace;
+
+  color-scheme: light;
   --text: #6b6375;
   --text-h: #08060d;
   --bg: #fff;
+  --app-bg: #f9fafb;
+  --surface-bg: #fff;
   --border: #e5e4e7;
+  --surface-border: #e5e7eb;
   --code-bg: #f4f3ec;
   --accent: #aa3bff;
   --accent-bg: rgba(170, 59, 255, 0.1);
@@ -11,13 +19,8 @@
   --shadow:
     rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
 
-  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --mono: ui-monospace, Consolas, monospace;
-
   font: 18px/145% var(--sans);
   letter-spacing: 0.18px;
-  color-scheme: light dark;
   color: var(--text);
   background: var(--bg);
   font-synthesis: none;
@@ -30,24 +33,158 @@
   }
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --text: #9ca3af;
-    --text-h: #f3f4f6;
-    --bg: #16171d;
-    --border: #2e303a;
-    --code-bg: #1f2028;
-    --accent: #c084fc;
-    --accent-bg: rgba(192, 132, 252, 0.15);
-    --accent-border: rgba(192, 132, 252, 0.5);
-    --social-bg: rgba(47, 48, 58, 0.5);
-    --shadow:
-      rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
-  }
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --text: #e2e8f0;
+  --text-h: #f8fafc;
+  --bg: #111318;
+  --app-bg: #111318;
+  --surface-bg: #1e222b;
+  --border: #4b5563;
+  --surface-border: #4b5563;
+  --code-bg: #1f2028;
+  --accent: #d8b4fe;
+  --accent-bg: rgba(216, 180, 254, 0.18);
+  --accent-border: rgba(216, 180, 254, 0.7);
+  --social-bg: rgba(47, 48, 58, 0.5);
+  --shadow:
+    rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
+}
 
-  #social .button-icon {
-    filter: invert(1) brightness(2);
-  }
+:root[data-theme='dark'] .library-page h1,
+:root[data-theme='dark'] .saved-page h1 {
+  color: var(--text-h) !important;
+}
+
+:root[data-theme='dark'] .library-page label,
+:root[data-theme='dark'] .library-page > div[style*='font-size: 14px'] {
+  color: var(--text) !important;
+}
+
+:root[data-theme='dark'] .library-page > div[style*='border: 1px'] {
+  background-color: var(--surface-bg) !important;
+  border-color: var(--surface-border) !important;
+}
+
+:root[data-theme='dark'] .library-page input,
+:root[data-theme='dark'] .library-page select {
+  color: var(--text-h);
+  background-color: var(--surface-bg);
+  border-color: var(--surface-border);
+}
+
+:root[data-theme='dark'] .exercise-row span {
+  color: var(--text) !important;
+}
+
+:root[data-theme='dark'] .exercise-row span[style*='font-weight: 600'] {
+  color: var(--text-h) !important;
+}
+
+:root[data-theme='dark'] .session-bar div[style*='color: rgb(107'] {
+  color: #e2e8f0 !important;
+}
+
+:root[data-theme='dark'] .session-bar span,
+:root[data-theme='dark'] .session-bar > div:first-child > div > div {
+  color: #f8fafc !important;
+}
+
+:root[data-theme='dark'] .session-bar > div:last-child > div {
+  color: #e2e8f0 !important;
+}
+
+:root[data-theme='dark'] .session-bar > div:last-child > button:first-child,
+:root[data-theme='dark'] .session-bar > div:last-child > button:nth-child(3) {
+  color: #f8fafc !important;
+  background-color: #374151 !important;
+  border-color: #6b7280 !important;
+}
+
+:root[data-theme='dark'] .saved-page button[aria-label='Bỏ lưu'] {
+  color: #111827 !important;
+  background-color: #e2e8f0 !important;
+  border-color: #94a3b8 !important;
+}
+
+:root[data-theme='dark'] #social .button-icon {
+  filter: invert(1) brightness(2);
+}
+
+#root {
+  background-color: var(--app-bg);
+  color: var(--text);
+}
+
+.app-shell {
+  background-color: var(--app-bg) !important;
+}
+
+.app-nav,
+.session-bar {
+  background-color: var(--surface-bg) !important;
+  border-color: var(--surface-border) !important;
+}
+
+.app-nav a {
+  color: var(--text);
+}
+
+.app-nav button,
+.session-bar button,
+.saved-page button {
+  color: var(--text-h);
+}
+
+.library-page,
+.saved-page {
+  color: var(--text);
+}
+
+.library-page h1,
+.saved-page h1 {
+  color: var(--text-h);
+}
+
+.exercise-row,
+.saved-page ul,
+.saved-page li {
+  background-color: var(--surface-bg) !important;
+  border-color: var(--surface-border) !important;
+  color: var(--text);
+}
+
+.exercise-row strong,
+.exercise-row .exercise-metadata,
+.saved-page strong {
+  color: var(--text-h);
+}
+
+.exercise-row span,
+.saved-page p,
+.session-bar span {
+  color: var(--text);
+}
+
+.session-bar .session-progress-track,
+.session-bar .session-progress-value {
+  border-radius: 3px;
+}
+
+.session-bar {
+  color: var(--text);
+}
+
+.session-bar .session-title {
+  color: var(--text-h) !important;
+}
+
+.session-bar .session-progress-track {
+  background-color: var(--surface-border) !important;
+}
+
+.session-bar .session-progress-value {
+  background-color: var(--accent) !important;
 }
 
 #root {

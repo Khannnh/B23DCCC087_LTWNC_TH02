@@ -7,35 +7,47 @@ interface ExerciseRowProps {
   index: number;
   style: React.CSSProperties;
   onStart: (exercise: Exercise) => void;
+  onAddToSession: (exercise: Exercise) => void;
   onToggleSave: (id: string) => void;
   isSaved: boolean;
 }
 
-export const ExerciseRow = React.memo(({ exercise, index, style, onStart, onToggleSave, isSaved }: ExerciseRowProps) => {
+export const ExerciseRow = React.memo(({ exercise, index, style, onStart, onAddToSession, onToggleSave, isSaved }: ExerciseRowProps) => {
   return (
-    <div style={{ ...style, display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 12px', borderBottom: '1px solid #eee', fontSize: '13px', background: '#fff', boxSizing: 'border-box' }}>
-      <div style={{ display: 'flex', alignItems: 'center', gap: '12px', overflow: 'hidden', flex: 1 }}>
-        <span style={{ width: '24px', color: '#888', flexShrink: 0 }}>{index + 1}</span>
+    <div style={{ ...style, display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 16px', borderBottom: '1px solid #e5e7eb', fontSize: '14px', background: '#fff', boxSizing: 'border-box' }}>
+      {/* Cột trái: Số thứ tự, tên bài, nhóm cơ */}
+      <div style={{ display: 'flex', alignItems: 'center', gap: '16px', overflow: 'hidden', flex: 1 }}>
+        <span style={{ width: '30px', color: '#6b7280', fontWeight: 500, flexShrink: 0 }}>{index + 1}</span>
         <div style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-          <span style={{ fontWeight: 500, color: '#333' }}>{exercise.name}</span>
-          <span style={{ marginLeft: '6px', fontSize: '11px', color: '#666' }}>({exercise.group})</span>
+          <span style={{ fontWeight: 600, color: '#1f2937' }}>{exercise.name}</span>
+          <span style={{ marginLeft: '8px', fontSize: '13px', color: '#4b5563' }}>({exercise.group})</span>
         </div>
       </div>
-      <div style={{ display: 'flex', alignItems: 'center', gap: '12px', flexShrink: 0, marginLeft: '12px' }}>
-        <span style={{ color: '#555', fontSize: '12px' }}>HLV: {exercise.trainer}</span>
-        <span style={{ color: '#555', width: '40px', textAlign: 'right', fontSize: '12px' }}>{formatDuration(exercise.duration)}</span>
-        <div style={{ display: 'flex', gap: '6px' }}>
+
+      {/* Cột phải: HLV, thời lượng và các nút bấm gần nhau */}
+      <div style={{ display: 'flex', alignItems: 'center', gap: '16px', flexShrink: 0, marginLeft: '16px' }}>
+        <span style={{ color: '#4b5563', fontSize: '13px' }}>HLV: {exercise.trainer}</span>
+        <span style={{ color: '#4b5563', width: '45px', textAlign: 'right', fontSize: '13px', fontWeight: 500 }}>{formatDuration(exercise.duration)}</span>
+        <div style={{ display: 'flex', gap: '8px' }}>
           <button 
             onClick={() => onStart(exercise)}
-            style={{ padding: '3px 8px', background: '#2563eb', color: '#fff', border: 'none', borderRadius: '4px', cursor: 'pointer', fontSize: '11px' }}
+            style={{ padding: '6px 12px', background: '#2563eb', color: '#fff', border: 'none', borderRadius: '4px', cursor: 'pointer', fontSize: '13px', fontWeight: 500 }}
           >
             Bắt đầu
           </button>
           <button 
-            onClick={() => onToggleSave(exercise.id)}
-            style={{ padding: '3px 6px', border: '1px solid #ccc', background: '#fff', borderRadius: '4px', cursor: 'pointer', fontSize: '11px' }}
+            onClick={() => onAddToSession(exercise)}
+            style={{ padding: '6px 10px', background: '#10b981', color: '#fff', border: 'none', borderRadius: '4px', cursor: 'pointer', fontSize: '13px', fontWeight: 500 }}
+            title="Thêm vào buổi tập"
           >
-            {isSaved ? '❤️' : '🤍'}
+            + Buổi tập
+          </button>
+          <button 
+            onClick={() => onToggleSave(exercise.id)}
+            aria-label={isSaved ? "Bỏ lưu" : "Lưu bài tập"}
+            style={{ padding: '6px 10px', border: '1px solid #d1d5db', background: '#fff', borderRadius: '4px', cursor: 'pointer', fontSize: '14px', color: isSaved ? '#ca8a04' : '#9ca3af' }}
+          >
+            {isSaved ? '★' : '☆'}
           </button>
         </div>
       </div>

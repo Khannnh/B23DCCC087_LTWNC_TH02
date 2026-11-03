@@ -19,8 +19,23 @@ export const useSessionStore = create<SessionState>()((set, get) => ({
   currentIndex: -1,
   isRunning: false,
   elapsed: 0,
-  startSession: (exercises, startIndex) => set({ queue: exercises, currentIndex: startIndex, isRunning: true, elapsed: 0 }),
-  toggleRun: () => set(state => ({ isRunning: !state.isRunning })),
+
+  startSession: (exercises, startIndex) => {
+    set({
+      queue: exercises,
+      currentIndex: startIndex >= 0 && startIndex < exercises.length ? startIndex : 0,
+      isRunning: true, // Tự động chạy đồng hồ ngay khi bấm bắt đầu
+      elapsed: 0,
+    });
+  },
+
+  toggleRun: () => {
+    const { currentIndex } = get();
+    if (currentIndex >= 0) {
+      set((state) => ({ isRunning: !state.isRunning }));
+    }
+  },
+
   next: () => {
     const { currentIndex, queue } = get();
     if (currentIndex < queue.length - 1) {
@@ -29,6 +44,7 @@ export const useSessionStore = create<SessionState>()((set, get) => ({
       set({ isRunning: false });
     }
   },
+
   prev: () => {
     const { elapsed, currentIndex } = get();
     if (elapsed > 3) {
@@ -39,9 +55,23 @@ export const useSessionStore = create<SessionState>()((set, get) => ({
       set({ elapsed: 0 });
     }
   },
-  addToSession: (exercise) => set(state => {
-    if (state.queue.some(e => e.id === exercise.id)) return state;
-    return { queue: [...state.queue, exercise] };
-  }),
-  tick: () => set(state => ({ elapsed: state.elapsed + 1 }))
+
+  addToSession: (exercise) => {
+    set((state) => {
+      if (state.queue.some((e) => e.id === exercise.id)) return state;
+      return { queue: [...state.queue, exercise] };
+    });
+  },
+
+  tick: () => {
+    const { currentIndex, queue, elapsed } = get();
+    if (currentIndex < 0 || currentIndex >= queue.length) return;
+
+    const currentExercise = queue[currentIndex];
+    if (elapsed + 1 >= currentExercise.duration) {
+      get().next();
+    } else {
+      set({ elapsed: elapsed + 1 });
+    }
+  },
 }));

@@ -32,6 +32,12 @@ export default function LibraryPage() {
     return result;
   }, [debouncedSearch, selectedGroup, sortBy]);
 
+  // Bổ sung lấy hàm addToSession từ useSessionStore
+  const addToSession = useSessionStore((s) => s.addToSession);
+
+  const handleAddToSession = useCallback((exercise: Exercise) => {
+    addToSession(exercise);
+  }, [addToSession]);
   const startSession = useSessionStore((s) => s.startSession);
   const savedIds = useSavedStore((s) => s.ids);
   const toggleSave = useSavedStore((s) => s.toggle);
@@ -108,6 +114,7 @@ export default function LibraryPage() {
                 index={index}
                 style={style}
                 onStart={handleStart}
+                onAddToSession={handleAddToSession}
                 onToggleSave={handleToggleSave}
                 isSaved={savedIds.includes(filteredExercises[index].id)}
               />

@@ -10,10 +10,15 @@ export const useSavedStore = create<SavedState>()(
   persist(
     (set) => ({
       ids: [],
-      toggle: (id) => set((state) => ({
-        ids: state.ids.includes(id) ? state.ids.filter(i => i !== id) : [...state.ids, id]
-      })),
+      toggle: (id) =>
+        set((state) => ({
+          ids: state.ids.includes(id)
+            ? state.ids.filter((i) => i !== id)
+            : [...state.ids, id],
+        })),
     }),
-    { name: 'workout-saved' }
+    {
+      name: 'workout-saved',
+    }
   )
 );
